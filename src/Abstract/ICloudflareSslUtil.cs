@@ -17,7 +17,7 @@ public interface ICloudflareSslUtil
     /// <param name="zoneId">The unique identifier of the zone to get SSL settings for.</param>
     /// <param name="cancellationToken">Optional token to cancel the operation.</param>
     /// <returns>A response containing the current Universal SSL settings for the zone.</returns>
-    ValueTask<TlsCertificatesAndHostnames_ssl_universal_settings_response> GetSslSettings(string zoneId, CancellationToken cancellationToken = default);
+    ValueTask<Tls_certificates_and_hostnames_ssl_universal_settings_response?> GetSslSettings(string zoneId, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Updates the Universal SSL settings for a specified zone.
@@ -26,7 +26,7 @@ public interface ICloudflareSslUtil
     /// <param name="settings">The new SSL settings to apply to the zone.</param>
     /// <param name="cancellationToken">Optional token to cancel the operation.</param>
     /// <returns>A response containing the updated Universal SSL settings for the zone.</returns>
-    ValueTask<TlsCertificatesAndHostnames_ssl_universal_settings_response> UpdateSslSettings(string zoneId, TlsCertificatesAndHostnames_universal settings,
+    ValueTask<Tls_certificates_and_hostnames_ssl_universal_settings_response?> UpdateSslSettings(string zoneId, Tls_certificates_and_hostnames_universal settings,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -36,7 +36,7 @@ public interface ICloudflareSslUtil
     /// <param name="zoneId">The unique identifier of the zone to enable Always Use HTTPS for.</param>
     /// <param name="cancellationToken">Optional token to cancel the operation.</param>
     /// <returns>A response containing the updated Universal SSL settings for the zone.</returns>
-    ValueTask<TlsCertificatesAndHostnames_ssl_universal_settings_response> EnableAlwaysUseHttps(string zoneId, CancellationToken cancellationToken = default);
+    ValueTask<Tls_certificates_and_hostnames_ssl_universal_settings_response?> EnableAlwaysUseHttps(string zoneId, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables the "Always Use HTTPS" feature for a specified zone.
@@ -45,5 +45,5 @@ public interface ICloudflareSslUtil
     /// <param name="zoneId">The unique identifier of the zone to disable Always Use HTTPS for.</param>
     /// <param name="cancellationToken">Optional token to cancel the operation.</param>
     /// <returns>A response containing the updated Universal SSL settings for the zone.</returns>
-    ValueTask<TlsCertificatesAndHostnames_ssl_universal_settings_response> DisableAlwaysUseHttps(string zoneId, CancellationToken cancellationToken = default);
+    ValueTask<Tls_certificates_and_hostnames_ssl_universal_settings_response?> DisableAlwaysUseHttps(string zoneId, CancellationToken cancellationToken = default);
 }
