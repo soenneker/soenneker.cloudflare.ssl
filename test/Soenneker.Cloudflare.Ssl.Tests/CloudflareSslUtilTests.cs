@@ -1,20 +1,19 @@
-﻿using Soenneker.Cloudflare.Ssl.Abstract;
-using Soenneker.Tests.FixturedUnit;
-using Xunit;
+using Soenneker.Cloudflare.Ssl.Abstract;
+using Soenneker.Tests.HostedUnit;
 
 namespace Soenneker.Cloudflare.Ssl.Tests;
 
-[Collection("Collection")]
-public sealed class CloudflareSslUtilTests : FixturedUnitTest
+[ClassDataSource<Host>(Shared = SharedType.PerTestSession)]
+public sealed class CloudflareSslUtilTests : HostedUnitTest
 {
     private readonly ICloudflareSslUtil _util;
 
-    public CloudflareSslUtilTests(Fixture fixture, ITestOutputHelper output) : base(fixture, output)
+    public CloudflareSslUtilTests(Host host) : base(host)
     {
         _util = Resolve<ICloudflareSslUtil>(true);
     }
 
-    [Fact]
+    [Test]
     public void Default()
     {
 
