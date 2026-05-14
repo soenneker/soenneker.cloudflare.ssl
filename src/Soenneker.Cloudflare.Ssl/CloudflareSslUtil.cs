@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +23,7 @@ public sealed class CloudflareSslUtil : ICloudflareSslUtil
         _logger = logger;
     }
 
-    public async ValueTask<Tls_certificates_and_hostnames_ssl_universal_settings_response?> GetSslSettings(string zoneId,
+    public async ValueTask<TlsCertificatesAndHostnamesSslUniversalSettingsResponse?> GetSslSettings(string zoneId,
         CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("Getting SSL settings for zone {ZoneId}", zoneId);
@@ -39,8 +39,8 @@ public sealed class CloudflareSslUtil : ICloudflareSslUtil
         }
     }
 
-    public async ValueTask<Tls_certificates_and_hostnames_ssl_universal_settings_response?> UpdateSslSettings(string zoneId,
-        Tls_certificates_and_hostnames_universal settings, CancellationToken cancellationToken = default)
+    public async ValueTask<TlsCertificatesAndHostnamesSslUniversalSettingsResponse?> UpdateSslSettings(string zoneId,
+        TlsCertificatesAndHostnamesUniversal settings, CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("Updating SSL settings for zone {ZoneId}", zoneId);
         CloudflareOpenApiClient client = await _client.Get(cancellationToken).NoSync();
@@ -55,14 +55,14 @@ public sealed class CloudflareSslUtil : ICloudflareSslUtil
         }
     }
 
-    public async ValueTask<Tls_certificates_and_hostnames_ssl_universal_settings_response?> EnableAlwaysUseHttps(string zoneId,
+    public async ValueTask<TlsCertificatesAndHostnamesSslUniversalSettingsResponse?> EnableAlwaysUseHttps(string zoneId,
         CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("Enabling always use HTTPS for zone {ZoneId}", zoneId);
         CloudflareOpenApiClient client = await _client.Get(cancellationToken).NoSync();
         try
         {
-            var settings = new Tls_certificates_and_hostnames_universal
+            var settings = new TlsCertificatesAndHostnamesUniversal
             {
                 Enabled = true
             };
@@ -76,14 +76,14 @@ public sealed class CloudflareSslUtil : ICloudflareSslUtil
         }
     }
 
-    public async ValueTask<Tls_certificates_and_hostnames_ssl_universal_settings_response?> DisableAlwaysUseHttps(string zoneId,
+    public async ValueTask<TlsCertificatesAndHostnamesSslUniversalSettingsResponse?> DisableAlwaysUseHttps(string zoneId,
         CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("Disabling always use HTTPS for zone {ZoneId}", zoneId);
         CloudflareOpenApiClient client = await _client.Get(cancellationToken).NoSync();
         try
         {
-            var settings = new Tls_certificates_and_hostnames_universal
+            var settings = new TlsCertificatesAndHostnamesUniversal
             {
                 Enabled = false
             };
