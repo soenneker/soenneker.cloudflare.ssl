@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Soenneker.Cloudflare.OpenApiClient.Models;
@@ -6,8 +7,7 @@ namespace Soenneker.Cloudflare.Ssl.Abstract;
 
 /// <summary>
 /// A utility for managing Cloudflare Universal SSL settings for zones.
-/// This interface provides methods to get, update, enable, and disable SSL settings,
-/// particularly focusing on the "Always Use HTTPS" feature.
+/// This interface provides methods to get, update, enable, and disable Universal SSL.
 /// </summary>
 public interface ICloudflareSslUtil
 {
@@ -30,20 +30,32 @@ public interface ICloudflareSslUtil
         CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Enables the "Always Use HTTPS" feature for a specified zone.
-    /// This will automatically redirect all HTTP traffic to HTTPS.
+    /// Enables Universal SSL certificate issuance for a zone.
     /// </summary>
-    /// <param name="zoneId">The unique identifier of the zone to enable Always Use HTTPS for.</param>
+    /// <param name="zoneId">The unique identifier of the zone.</param>
     /// <param name="cancellationToken">Optional token to cancel the operation.</param>
     /// <returns>A response containing the updated Universal SSL settings for the zone.</returns>
-    ValueTask<TlsCertificatesAndHostnamesSslUniversalSettingsResponse?> EnableAlwaysUseHttps(string zoneId, CancellationToken cancellationToken = default);
+    ValueTask<TlsCertificatesAndHostnamesSslUniversalSettingsResponse?> EnableUniversalSsl(string zoneId, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Disables the "Always Use HTTPS" feature for a specified zone.
-    /// This will allow both HTTP and HTTPS traffic without automatic redirection.
+    /// Disables Universal SSL certificate issuance for a zone.
     /// </summary>
-    /// <param name="zoneId">The unique identifier of the zone to disable Always Use HTTPS for.</param>
+    /// <param name="zoneId">The unique identifier of the zone.</param>
     /// <param name="cancellationToken">Optional token to cancel the operation.</param>
     /// <returns>A response containing the updated Universal SSL settings for the zone.</returns>
-    ValueTask<TlsCertificatesAndHostnamesSslUniversalSettingsResponse?> DisableAlwaysUseHttps(string zoneId, CancellationToken cancellationToken = default);
+    ValueTask<TlsCertificatesAndHostnamesSslUniversalSettingsResponse?> DisableUniversalSsl(string zoneId, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Enables Universal SSL. This legacy name does not enable HTTP-to-HTTPS redirects.
+    /// </summary>
+    [Obsolete("This method controls Universal SSL, not Always Use HTTPS. Use EnableUniversalSsl instead.")]
+    ValueTask<TlsCertificatesAndHostnamesSslUniversalSettingsResponse?> EnableAlwaysUseHttps(string zoneId,
+        CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Disables Universal SSL. This legacy name does not disable HTTP-to-HTTPS redirects.
+    /// </summary>
+    [Obsolete("This method controls Universal SSL, not Always Use HTTPS. Use DisableUniversalSsl instead.")]
+    ValueTask<TlsCertificatesAndHostnamesSslUniversalSettingsResponse?> DisableAlwaysUseHttps(string zoneId,
+        CancellationToken cancellationToken = default);
 }

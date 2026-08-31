@@ -11,7 +11,6 @@ using Soenneker.Extensions.ValueTask;
 
 namespace Soenneker.Cloudflare.Ssl;
 
-///<inheritdoc cref="ICloudflareSslUtil"/>
 public sealed class CloudflareSslUtil : ICloudflareSslUtil
 {
     private readonly ICloudflareClientUtil _client;
@@ -55,10 +54,10 @@ public sealed class CloudflareSslUtil : ICloudflareSslUtil
         }
     }
 
-    public async ValueTask<TlsCertificatesAndHostnamesSslUniversalSettingsResponse?> EnableAlwaysUseHttps(string zoneId,
+    public async ValueTask<TlsCertificatesAndHostnamesSslUniversalSettingsResponse?> EnableUniversalSsl(string zoneId,
         CancellationToken cancellationToken = default)
     {
-        _logger.LogInformation("Enabling always use HTTPS for zone {ZoneId}", zoneId);
+        _logger.LogInformation("Enabling Universal SSL for zone {ZoneId}", zoneId);
         CloudflareOpenApiClient client = await _client.Get(cancellationToken).NoSync();
         try
         {
@@ -71,15 +70,15 @@ public sealed class CloudflareSslUtil : ICloudflareSslUtil
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error enabling always use HTTPS for zone {ZoneId}", zoneId);
+            _logger.LogError(ex, "Error enabling Universal SSL for zone {ZoneId}", zoneId);
             throw;
         }
     }
 
-    public async ValueTask<TlsCertificatesAndHostnamesSslUniversalSettingsResponse?> DisableAlwaysUseHttps(string zoneId,
+    public async ValueTask<TlsCertificatesAndHostnamesSslUniversalSettingsResponse?> DisableUniversalSsl(string zoneId,
         CancellationToken cancellationToken = default)
     {
-        _logger.LogInformation("Disabling always use HTTPS for zone {ZoneId}", zoneId);
+        _logger.LogInformation("Disabling Universal SSL for zone {ZoneId}", zoneId);
         CloudflareOpenApiClient client = await _client.Get(cancellationToken).NoSync();
         try
         {
@@ -92,8 +91,16 @@ public sealed class CloudflareSslUtil : ICloudflareSslUtil
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error disabling always use HTTPS for zone {ZoneId}", zoneId);
+            _logger.LogError(ex, "Error disabling Universal SSL for zone {ZoneId}", zoneId);
             throw;
         }
     }
+
+    [Obsolete("This method controls Universal SSL, not Always Use HTTPS. Use EnableUniversalSsl instead.")]
+    public ValueTask<TlsCertificatesAndHostnamesSslUniversalSettingsResponse?> EnableAlwaysUseHttps(string zoneId,
+        CancellationToken cancellationToken = default) => EnableUniversalSsl(zoneId, cancellationToken);
+
+    [Obsolete("This method controls Universal SSL, not Always Use HTTPS. Use DisableUniversalSsl instead.")]
+    public ValueTask<TlsCertificatesAndHostnamesSslUniversalSettingsResponse?> DisableAlwaysUseHttps(string zoneId,
+        CancellationToken cancellationToken = default) => DisableUniversalSsl(zoneId, cancellationToken);
 }
