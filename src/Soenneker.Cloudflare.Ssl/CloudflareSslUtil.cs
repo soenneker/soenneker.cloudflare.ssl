@@ -11,6 +11,7 @@ using Soenneker.Extensions.ValueTask;
 
 namespace Soenneker.Cloudflare.Ssl;
 
+/// <inheritdoc cref="ICloudflareSslUtil" />
 public sealed class CloudflareSslUtil : ICloudflareSslUtil
 {
     private readonly ICloudflareClientUtil _client;
